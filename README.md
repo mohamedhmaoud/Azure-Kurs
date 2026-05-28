@@ -27,3 +27,7 @@ PowerShell
 Terraform  
 Docker  
 Git & GitHub  
+
+## 📖 Resources  
+Microsoft Azure Documentation  (https://learn.microsoft.com/azure/?utm_source=chatgpt.com)  
+Microsoft Learn  (https://learn.microsoft.com/training/azure/?utm_source=chatgpt.com)  
