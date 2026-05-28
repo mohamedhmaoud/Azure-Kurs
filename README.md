@@ -13,3 +13,9 @@ Azure Active Directory
 DevOps & Deployment  
 Cloud Security  
 Infrastructure as Code  
+
+## 🚀 Goals  
+Learn Azure step by step  
+Practice real cloud deployments  
+Build hands-on cloud projects  
+Improve DevOps and automation skills  
