@@ -1,0 +1,1244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AZ-104 Study Guide — Azure Administrator</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Sora:wght@300;400;500;600&display=swap');
+
+  :root {
+    --bg: #0d1117;
+    --bg2: #161b22;
+    --bg3: #1c2333;
+    --border: rgba(255,255,255,0.08);
+    --border2: rgba(255,255,255,0.15);
+    --text: #e6edf3;
+    --text2: #8b949e;
+    --text3: #6e7681;
+    --blue: #58a6ff;
+    --blue-bg: rgba(88,166,255,0.1);
+    --green: #3fb950;
+    --green-bg: rgba(63,185,80,0.1);
+    --amber: #d29922;
+    --amber-bg: rgba(210,153,34,0.1);
+    --red: #f85149;
+    --red-bg: rgba(248,81,73,0.1);
+    --purple: #bc8cff;
+    --purple-bg: rgba(188,140,255,0.1);
+    --teal: #39d353;
+    --accent: #58a6ff;
+    --mono: 'IBM Plex Mono', monospace;
+    --sans: 'Sora', sans-serif;
+  }
+
+  * { margin:0; padding:0; box-sizing:border-box; }
+
+  body {
+    font-family: var(--sans);
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    font-size: 15px;
+    line-height: 1.7;
+  }
+
+  /* SIDEBAR */
+  .layout { display: flex; min-height: 100vh; }
+
+  .sidebar {
+    width: 260px;
+    min-width: 260px;
+    background: var(--bg2);
+    border-right: 1px solid var(--border);
+    padding: 2rem 0;
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .sidebar-logo {
+    padding: 0 1.5rem 1.5rem;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 1rem;
+  }
+
+  .sidebar-logo .az-badge {
+    font-family: var(--mono);
+    font-size: 11px;
+    background: var(--blue-bg);
+    color: var(--blue);
+    border: 1px solid var(--blue);
+    border-radius: 4px;
+    padding: 2px 8px;
+    display: inline-block;
+    margin-bottom: 8px;
+    letter-spacing: 1px;
+  }
+
+  .sidebar-logo h1 {
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--text);
+    line-height: 1.3;
+  }
+
+  .sidebar-logo p {
+    font-size: 12px;
+    color: var(--text3);
+    margin-top: 3px;
+  }
+
+  .nav-section {
+    padding: 0 1rem 1rem;
+  }
+
+  .nav-section-label {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 1.5px;
+    color: var(--text3);
+    text-transform: uppercase;
+    padding: 0 .5rem;
+    margin-bottom: .5rem;
+  }
+
+  .nav-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px 12px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 13px;
+    color: var(--text2);
+    transition: all .2s;
+    border: 1px solid transparent;
+  }
+
+  .nav-item:hover { background: var(--bg3); color: var(--text); }
+  .nav-item.active { background: var(--blue-bg); color: var(--blue); border-color: rgba(88,166,255,0.2); }
+  .nav-item.done .nav-dot { background: var(--green); }
+
+  .nav-dot {
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: var(--border2);
+    flex-shrink: 0;
+    transition: background .3s;
+  }
+
+  .nav-num {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--text3);
+    width: 18px;
+    flex-shrink: 0;
+  }
+
+  .progress-section {
+    margin-top: auto;
+    padding: 1rem 1.5rem;
+    border-top: 1px solid var(--border);
+  }
+
+  .progress-label {
+    font-size: 12px;
+    color: var(--text3);
+    margin-bottom: 6px;
+    font-family: var(--mono);
+  }
+
+  .progress-track {
+    height: 3px;
+    background: var(--border2);
+    border-radius: 2px;
+  }
+
+  .progress-fill {
+    height: 3px;
+    background: var(--green);
+    border-radius: 2px;
+    transition: width .5s ease;
+  }
+
+  /* MAIN */
+  .main {
+    flex: 1;
+    padding: 2.5rem 3rem;
+    max-width: 860px;
+  }
+
+  .module { display: none; }
+  .module.visible { display: block; animation: fadeIn .3s ease; }
+
+  @keyframes fadeIn { from { opacity:0; transform:translateY(8px); } to { opacity:1; transform:translateY(0); } }
+
+  /* MODULE HEADER */
+  .mod-header {
+    margin-bottom: 2rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .mod-tag {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 1px;
+    color: var(--text3);
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+
+  .mod-header h1 {
+    font-size: 28px;
+    font-weight: 600;
+    color: var(--text);
+    line-height: 1.2;
+  }
+
+  .mod-header p {
+    font-size: 15px;
+    color: var(--text2);
+    margin-top: 8px;
+    max-width: 560px;
+  }
+
+  /* CARDS */
+  .card {
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 1.5rem;
+    margin-bottom: 1.25rem;
+  }
+
+  .card h2 {
+    font-size: 17px;
+    font-weight: 600;
+    color: var(--text);
+    margin-bottom: .75rem;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .card h3 {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text);
+    margin: 1.25rem 0 .5rem;
+    text-transform: uppercase;
+    letter-spacing: .5px;
+    font-family: var(--mono);
+  }
+
+  .card p, .card li { font-size: 14px; color: var(--text2); }
+  .card ul { padding-left: 1.25rem; }
+  .card ul li { margin-bottom: .25rem; }
+
+  /* CONCEPT GRID */
+  .concept-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: 10px;
+    margin: 1rem 0;
+  }
+
+  .concept-card {
+    background: var(--bg3);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 1rem;
+    cursor: pointer;
+    transition: border-color .2s, transform .2s;
+  }
+
+  .concept-card:hover { border-color: var(--blue); transform: translateY(-2px); }
+
+  .concept-card .cc-icon {
+    font-size: 22px;
+    margin-bottom: 8px;
+  }
+
+  .concept-card .cc-title {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text);
+  }
+
+  .concept-card .cc-desc {
+    font-size: 12px;
+    color: var(--text3);
+    margin-top: 3px;
+    line-height: 1.4;
+  }
+
+  /* BADGES */
+  .badge {
+    font-family: var(--mono);
+    font-size: 11px;
+    padding: 2px 10px;
+    border-radius: 20px;
+    display: inline-block;
+    font-weight: 500;
+  }
+
+  .badge-blue { background: var(--blue-bg); color: var(--blue); border: 1px solid rgba(88,166,255,.3); }
+  .badge-green { background: var(--green-bg); color: var(--green); border: 1px solid rgba(63,185,80,.3); }
+  .badge-amber { background: var(--amber-bg); color: var(--amber); border: 1px solid rgba(210,153,34,.3); }
+  .badge-red { background: var(--red-bg); color: var(--red); border: 1px solid rgba(248,81,73,.3); }
+  .badge-purple { background: var(--purple-bg); color: var(--purple); border: 1px solid rgba(188,140,255,.3); }
+
+  /* TABLES */
+  .tbl-wrap { overflow-x: auto; margin: 1rem 0; }
+
+  table.az {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+  }
+
+  table.az th {
+    background: var(--bg3);
+    color: var(--text);
+    font-weight: 600;
+    padding: 10px 14px;
+    text-align: left;
+    border-bottom: 1px solid var(--border2);
+    font-family: var(--mono);
+    font-size: 12px;
+    letter-spacing: .5px;
+  }
+
+  table.az td {
+    padding: 10px 14px;
+    border-bottom: 1px solid var(--border);
+    color: var(--text2);
+    vertical-align: top;
+  }
+
+  table.az tr:last-child td { border-bottom: none; }
+  table.az tr:hover td { background: rgba(255,255,255,.02); }
+  table.az strong { color: var(--text); }
+
+  /* CALLOUTS */
+  .callout {
+    border-radius: 8px;
+    padding: 1rem 1.25rem;
+    margin: 1rem 0;
+    font-size: 13px;
+    border-left: 3px solid;
+  }
+
+  .callout-title {
+    font-weight: 600;
+    font-size: 12px;
+    letter-spacing: .5px;
+    text-transform: uppercase;
+    font-family: var(--mono);
+    margin-bottom: 5px;
+  }
+
+  .callout-blue { background: var(--blue-bg); border-color: var(--blue); color: #a5c8ff; }
+  .callout-blue .callout-title { color: var(--blue); }
+  .callout-amber { background: var(--amber-bg); border-color: var(--amber); color: #e6c87a; }
+  .callout-amber .callout-title { color: var(--amber); }
+  .callout-green { background: var(--green-bg); border-color: var(--green); color: #8ee09c; }
+  .callout-green .callout-title { color: var(--green); }
+
+  /* DIAGRAM */
+  .diagram { margin: 1.25rem 0; border-radius: 10px; overflow: hidden; background: var(--bg3); border: 1px solid var(--border); padding: 1.25rem; }
+
+  /* QUIZ */
+  .quiz-card {
+    background: linear-gradient(135deg, var(--bg2) 0%, var(--bg3) 100%);
+    border: 1px solid var(--border2);
+    border-radius: 12px;
+    padding: 1.5rem;
+    margin-top: 1.5rem;
+  }
+
+  .quiz-label {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 1.5px;
+    color: var(--text3);
+    text-transform: uppercase;
+    margin-bottom: 1rem;
+  }
+
+  .quiz-q { font-size: 15px; font-weight: 500; color: var(--text); margin-bottom: 1.25rem; line-height: 1.5; }
+
+  .quiz-opts { display: flex; flex-direction: column; gap: 8px; }
+
+  .quiz-opt {
+    padding: 12px 16px;
+    border: 1px solid var(--border2);
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 13px;
+    color: var(--text2);
+    background: var(--bg);
+    text-align: left;
+    transition: all .2s;
+    font-family: var(--sans);
+  }
+
+  .quiz-opt:hover:not(:disabled) { border-color: var(--blue); color: var(--text); background: var(--blue-bg); }
+  .quiz-opt.correct { background: var(--green-bg); border-color: var(--green); color: #8ee09c; }
+  .quiz-opt.wrong { background: var(--red-bg); border-color: var(--red); color: #ff9492; }
+
+  .quiz-feedback {
+    margin-top: 1rem;
+    padding: 1rem;
+    border-radius: 8px;
+    font-size: 13px;
+    display: none;
+  }
+
+  .quiz-feedback.show { display: block; }
+  .quiz-feedback.correct { background: var(--green-bg); color: #8ee09c; border: 1px solid rgba(63,185,80,.3); }
+  .quiz-feedback.wrong { background: var(--red-bg); color: #ff9492; border: 1px solid rgba(248,81,73,.3); }
+
+  /* NAV BUTTONS */
+  .mod-nav {
+    display: flex;
+    gap: 10px;
+    margin-top: 2rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--border);
+    flex-wrap: wrap;
+  }
+
+  .btn {
+    padding: 10px 20px;
+    border-radius: 8px;
+    font-size: 13px;
+    cursor: pointer;
+    font-family: var(--sans);
+    font-weight: 500;
+    transition: all .2s;
+    border: 1px solid;
+  }
+
+  .btn-primary { background: var(--blue); color: #0d1117; border-color: var(--blue); }
+  .btn-primary:hover { background: #79b8ff; }
+  .btn-ghost { background: transparent; color: var(--text2); border-color: var(--border2); }
+  .btn-ghost:hover { background: var(--bg3); color: var(--text); }
+
+  /* OVERVIEW GRID */
+  .overview-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 12px;
+    margin: 1.25rem 0;
+  }
+
+  .overview-card {
+    background: var(--bg3);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 1.25rem;
+    cursor: pointer;
+    transition: all .2s;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .overview-card:hover { border-color: var(--blue); transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,0,0,.3); }
+
+  .overview-card .oc-icon { font-size: 24px; }
+  .overview-card .oc-title { font-size: 14px; font-weight: 600; color: var(--text); }
+  .overview-card .oc-desc { font-size: 12px; color: var(--text3); }
+  .overview-card .oc-weight { font-family: var(--mono); font-size: 11px; }
+
+  /* EXAM TABLE WEIGHT BARS */
+  .weight-bar {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .weight-track {
+    flex: 1;
+    height: 4px;
+    background: var(--border2);
+    border-radius: 2px;
+  }
+
+  .weight-fill {
+    height: 4px;
+    border-radius: 2px;
+    background: var(--blue);
+  }
+
+  /* CODE INLINE */
+  code {
+    font-family: var(--mono);
+    font-size: 12px;
+    background: var(--bg3);
+    color: var(--blue);
+    padding: 1px 6px;
+    border-radius: 4px;
+    border: 1px solid var(--border);
+  }
+
+  /* SVG text defaults */
+  svg text { font-family: 'Sora', sans-serif; }
+
+  /* SCROLLBAR */
+  ::-webkit-scrollbar { width: 6px; height: 6px; }
+  ::-webkit-scrollbar-track { background: transparent; }
+  ::-webkit-scrollbar-thumb { background: var(--border2); border-radius: 3px; }
+  ::-webkit-scrollbar-thumb:hover { background: var(--text3); }
+
+  @media (max-width: 768px) {
+    .layout { flex-direction: column; }
+    .sidebar { width: 100%; height: auto; position: static; flex-direction: row; flex-wrap: wrap; padding: 1rem; gap: .5rem; }
+    .sidebar-logo { display: none; }
+    .nav-section { padding: 0; }
+    .progress-section { display: none; }
+    .main { padding: 1.5rem 1.25rem; }
+  }
+</style>
+</head>
+<body>
+
+<div class="layout">
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+    <div class="sidebar-logo">
+      <div class="az-badge">AZ-104</div>
+      <h1>Azure Administrator</h1>
+      <p>Study Guide — Offline</p>
+    </div>
+
+    <div class="nav-section">
+      <div class="nav-section-label">Modules</div>
+      <div class="nav-item active" id="nav-0" onclick="goTo(0)">
+        <span class="nav-num">00</span>
+        <div class="nav-dot"></div>
+        Overview &amp; Exam Guide
+      </div>
+      <div class="nav-item" id="nav-1" onclick="goTo(1)">
+        <span class="nav-num">01</span>
+        <div class="nav-dot"></div>
+        Identities &amp; Access
+      </div>
+      <div class="nav-item" id="nav-2" onclick="goTo(2)">
+        <span class="nav-num">02</span>
+        <div class="nav-dot"></div>
+        Virtual Networking
+      </div>
+      <div class="nav-item" id="nav-3" onclick="goTo(3)">
+        <span class="nav-num">03</span>
+        <div class="nav-dot"></div>
+        Virtual Machines
+      </div>
+      <div class="nav-item" id="nav-4" onclick="goTo(4)">
+        <span class="nav-num">04</span>
+        <div class="nav-dot"></div>
+        Storage
+      </div>
+      <div class="nav-item" id="nav-5" onclick="goTo(5)">
+        <span class="nav-num">05</span>
+        <div class="nav-dot"></div>
+        Governance
+      </div>
+    </div>
+
+    <div class="progress-section">
+      <div class="progress-label" id="prog-label">0 / 5 modules</div>
+      <div class="progress-track"><div class="progress-fill" id="prog-fill" style="width:0%"></div></div>
+    </div>
+  </aside>
+
+  <!-- MAIN CONTENT -->
+  <main class="main">
+
+    <!-- MODULE 0: OVERVIEW -->
+    <div class="module visible" id="mod-0">
+      <div class="mod-header">
+        <div class="mod-tag">Introduction</div>
+        <h1>AZ-104 — Azure Administrator</h1>
+        <p>A focused, clear study guide. Each module explains a key exam topic with diagrams, real examples, and a practice question.</p>
+      </div>
+
+      <div class="card">
+        <h2>📋 What this exam covers</h2>
+        <div class="tbl-wrap">
+          <table class="az">
+            <thead><tr><th>Topic</th><th>Weight</th><th></th></tr></thead>
+            <tbody>
+              <tr><td>Manage Azure identities and governance</td><td><span class="badge badge-blue">20–25%</span></td><td><div class="weight-bar"><div class="weight-track"><div class="weight-fill" style="width:22%"></div></div></div></td></tr>
+              <tr><td>Implement and manage storage</td><td><span class="badge badge-green">15–20%</span></td><td><div class="weight-bar"><div class="weight-track"><div class="weight-fill" style="width:17%;background:#3fb950"></div></div></div></td></tr>
+              <tr><td>Deploy and manage Azure compute resources</td><td><span class="badge badge-amber">20–25%</span></td><td><div class="weight-bar"><div class="weight-track"><div class="weight-fill" style="width:22%;background:#d29922"></div></div></div></td></tr>
+              <tr><td>Implement and manage virtual networking</td><td><span class="badge badge-amber">20–25%</span></td><td><div class="weight-bar"><div class="weight-track"><div class="weight-fill" style="width:22%;background:#d29922"></div></div></div></td></tr>
+              <tr><td>Monitor and maintain Azure resources</td><td><span class="badge badge-red">10–15%</span></td><td><div class="weight-bar"><div class="weight-track"><div class="weight-fill" style="width:12%;background:#f85149"></div></div></div></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="overview-grid">
+        <div class="overview-card" onclick="goTo(1)">
+          <div class="oc-icon">🔐</div>
+          <div class="oc-title">Identities &amp; Access</div>
+          <div class="oc-desc">Azure AD, RBAC, users, groups, service principals</div>
+          <span class="badge badge-blue oc-weight">Module 01</span>
+        </div>
+        <div class="overview-card" onclick="goTo(2)">
+          <div class="oc-icon">🌐</div>
+          <div class="oc-title">Virtual Networking</div>
+          <div class="oc-desc">VNets, NSGs, peering, VPN, load balancers</div>
+          <span class="badge badge-green oc-weight">Module 02</span>
+        </div>
+        <div class="overview-card" onclick="goTo(3)">
+          <div class="oc-icon">🖥</div>
+          <div class="oc-title">Virtual Machines</div>
+          <div class="oc-desc">VM sizes, availability zones, disks, backups</div>
+          <span class="badge badge-amber oc-weight">Module 03</span>
+        </div>
+        <div class="overview-card" onclick="goTo(4)">
+          <div class="oc-icon">💾</div>
+          <div class="oc-title">Storage</div>
+          <div class="oc-desc">Blobs, files, access tiers, SAS tokens, security</div>
+          <span class="badge badge-purple oc-weight">Module 04</span>
+        </div>
+        <div class="overview-card" onclick="goTo(5)">
+          <div class="oc-icon">🏛</div>
+          <div class="oc-title">Governance</div>
+          <div class="oc-desc">Policies, locks, tags, cost management, hierarchy</div>
+          <span class="badge badge-red oc-weight">Module 05</span>
+        </div>
+      </div>
+
+      <div class="callout callout-blue">
+        <div class="callout-title">💡 How to use this guide</div>
+        Go through each module in order. Read the concept, look at the diagram, check the example, then test yourself with the quiz question. The exam is scenario-based — focus on understanding WHY, not just memorizing names.
+      </div>
+
+      <div class="mod-nav">
+        <button class="btn btn-primary" onclick="goTo(1)">Start with Module 01 →</button>
+      </div>
+    </div>
+
+    <!-- MODULE 1: IDENTITIES -->
+    <div class="module" id="mod-1">
+      <div class="mod-header">
+        <div class="mod-tag">Module 01</div>
+        <h1>Identities &amp; Access</h1>
+        <p>Control who can log in to Azure and what they're allowed to do.</p>
+      </div>
+
+      <div class="card">
+        <h2>🔐 Azure Active Directory (Entra ID)</h2>
+        <p>Think of it as the <strong style="color:var(--text)">front door</strong> to Azure. Every user, app, or service needs an identity here to access anything in Azure.</p>
+        <h3>Key objects</h3>
+        <div class="concept-grid">
+          <div class="concept-card">
+            <div class="cc-icon">👤</div>
+            <div class="cc-title">Users</div>
+            <div class="cc-desc">Individual accounts. Members (internal) or Guests (external, B2B).</div>
+          </div>
+          <div class="concept-card">
+            <div class="cc-icon">👥</div>
+            <div class="cc-title">Groups</div>
+            <div class="cc-desc">Assign permissions to many users at once. Security or M365 groups.</div>
+          </div>
+          <div class="concept-card">
+            <div class="cc-icon">🤖</div>
+            <div class="cc-title">Service Principals</div>
+            <div class="cc-desc">Identity for apps or automated scripts to authenticate.</div>
+          </div>
+          <div class="concept-card">
+            <div class="cc-icon">🔑</div>
+            <div class="cc-title">Managed Identity</div>
+            <div class="cc-desc">Auto-managed identity for Azure resources. No password to manage.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <h2>🛡 RBAC — Role Based Access Control</h2>
+        <p>RBAC controls access to Azure resources. The formula: assign a <em style="color:var(--blue)">role</em> to a <em style="color:var(--green)">security principal</em> at a <em style="color:var(--amber)">scope</em>.</p>
+
+        <div class="diagram">
+          <svg width="100%" viewBox="0 0 620 160">
+            <defs>
+              <marker id="a1" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                <path d="M2 1L8 5L2 9" fill="none" stroke="#8b949e" stroke-width="1.5" stroke-linecap="round"/>
+              </marker>
+            </defs>
+            <!-- Who -->
+            <rect x="10" y="50" width="130" height="60" rx="8" fill="rgba(63,185,80,.12)" stroke="rgba(63,185,80,.4)" stroke-width="1"/>
+            <text x="75" y="76" text-anchor="middle" font-size="13" font-weight="600" fill="#3fb950">Who?</text>
+            <text x="75" y="95" text-anchor="middle" font-size="12" fill="#8ee09c">User / Group</text>
+            <!-- Arrow -->
+            <line x1="140" y1="80" x2="185" y2="80" stroke="#6e7681" stroke-width="1" marker-end="url(#a1)"/>
+            <text x="162" y="72" text-anchor="middle" font-size="10" fill="#6e7681">assigned</text>
+            <!-- What -->
+            <rect x="185" y="50" width="140" height="60" rx="8" fill="rgba(88,166,255,.12)" stroke="rgba(88,166,255,.4)" stroke-width="1"/>
+            <text x="255" y="76" text-anchor="middle" font-size="13" font-weight="600" fill="#58a6ff">What role?</text>
+            <text x="255" y="95" text-anchor="middle" font-size="12" fill="#a5c8ff">Owner / Contributor…</text>
+            <!-- Arrow -->
+            <line x1="325" y1="80" x2="370" y2="80" stroke="#6e7681" stroke-width="1" marker-end="url(#a1)"/>
+            <text x="347" y="72" text-anchor="middle" font-size="10" fill="#6e7681">at scope</text>
+            <!-- Where -->
+            <rect x="370" y="50" width="140" height="60" rx="8" fill="rgba(210,153,34,.12)" stroke="rgba(210,153,34,.4)" stroke-width="1"/>
+            <text x="440" y="76" text-anchor="middle" font-size="13" font-weight="600" fill="#d29922">Where?</text>
+            <text x="440" y="95" text-anchor="middle" font-size="12" fill="#e6c87a">Sub / RG / Resource</text>
+            <!-- Arrow -->
+            <line x1="510" y1="80" x2="555" y2="80" stroke="#6e7681" stroke-width="1" marker-end="url(#a1)"/>
+            <!-- Result -->
+            <rect x="555" y="58" width="55" height="44" rx="8" fill="rgba(63,185,80,.15)" stroke="rgba(63,185,80,.5)" stroke-width="1"/>
+            <text x="582" y="82" text-anchor="middle" font-size="13" font-weight="600" fill="#3fb950">✓ OK</text>
+            <text x="310" y="140" text-anchor="middle" font-size="11" fill="#6e7681">Permissions inherit from parent → child (Subscription → Resource Group → Resource)</text>
+          </svg>
+        </div>
+
+        <h3>Built-in roles you must know</h3>
+        <div class="tbl-wrap">
+          <table class="az">
+            <thead><tr><th>Role</th><th>Can do</th><th>Cannot do</th></tr></thead>
+            <tbody>
+              <tr><td><strong>Owner</strong></td><td>Full control + manage access</td><td>—</td></tr>
+              <tr><td><strong>Contributor</strong></td><td>Create &amp; manage all resources</td><td>Cannot assign roles</td></tr>
+              <tr><td><strong>Reader</strong></td><td>View everything</td><td>Cannot change anything</td></tr>
+              <tr><td><strong>User Access Admin</strong></td><td>Manage access (roles)</td><td>Cannot modify resources</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="callout callout-green">
+          <div class="callout-title">✅ Real-world example</div>
+          Your dev team has 10 people. Instead of setting permissions for each person: create a Group called <code>Dev-Team</code>, assign the <strong>Contributor</strong> role to that group at the Resource Group scope. Done — all 10 devs can manage resources there, and you only manage one assignment.
+        </div>
+
+        <div class="callout callout-amber">
+          <div class="callout-title">⚠️ Exam trap</div>
+          RBAC controls access to Azure <em>resources</em> (portal, CLI, APIs). It does NOT control what happens inside the OS of a VM. For OS-level access, you use local accounts or Active Directory — totally separate.
+        </div>
+      </div>
+
+      <div class="quiz-card">
+        <div class="quiz-label">Quick Check — Module 01</div>
+        <div class="quiz-q">A developer needs to deploy resources in a resource group, but should NOT be able to grant permissions to others. Which role should you assign?</div>
+        <div class="quiz-opts" id="q1">
+          <button class="quiz-opt" onclick="ans('q1',0,false)">A. Owner</button>
+          <button class="quiz-opt" onclick="ans('q1',1,true)">B. Contributor</button>
+          <button class="quiz-opt" onclick="ans('q1',2,false)">C. Reader</button>
+          <button class="quiz-opt" onclick="ans('q1',3,false)">D. User Access Administrator</button>
+        </div>
+        <div class="quiz-feedback" id="q1-fb"></div>
+      </div>
+
+      <div class="mod-nav">
+        <button class="btn btn-ghost" onclick="goTo(0)">← Back</button>
+        <button class="btn btn-primary" onclick="goTo(2)">Next: Networking →</button>
+      </div>
+    </div>
+
+    <!-- MODULE 2: NETWORKING -->
+    <div class="module" id="mod-2">
+      <div class="mod-header">
+        <div class="mod-tag">Module 02</div>
+        <h1>Virtual Networking</h1>
+        <p>Build isolated, secure networks for your Azure resources.</p>
+      </div>
+
+      <div class="card">
+        <h2>🌐 Virtual Network (VNet)</h2>
+        <p>A VNet is your <strong style="color:var(--text)">private network inside Azure</strong>. Resources inside the same VNet can talk to each other. By default, they cannot reach the internet or other VNets without extra configuration.</p>
+
+        <div class="diagram">
+          <svg width="100%" viewBox="0 0 600 250">
+            <defs>
+              <marker id="a2" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                <path d="M2 1L8 5L2 9" fill="none" stroke="#8b949e" stroke-width="1.5" stroke-linecap="round"/>
+              </marker>
+            </defs>
+            <!-- VNet outer -->
+            <rect x="60" y="10" width="480" height="210" rx="14" fill="rgba(88,166,255,.06)" stroke="rgba(88,166,255,.35)" stroke-width="1"/>
+            <text x="300" y="32" text-anchor="middle" font-size="13" font-weight="600" fill="#58a6ff">VNet — 10.0.0.0/16</text>
+            <!-- Subnet 1 -->
+            <rect x="85" y="48" width="185" height="150" rx="10" fill="rgba(88,166,255,.08)" stroke="rgba(88,166,255,.25)" stroke-width="1"/>
+            <text x="177" y="70" text-anchor="middle" font-size="12" font-weight="600" fill="#58a6ff">Web Subnet 10.0.1.0/24</text>
+            <rect x="107" y="85" width="140" height="36" rx="6" fill="rgba(88,166,255,.15)" stroke="rgba(88,166,255,.3)" stroke-width="0.5"/>
+            <text x="177" y="103" text-anchor="middle" font-size="12" fill="#a5c8ff" dominant-baseline="central">🖥 Web Server VM</text>
+            <rect x="100" y="148" width="155" height="28" rx="5" fill="rgba(210,153,34,.12)" stroke="rgba(210,153,34,.4)" stroke-width="0.5"/>
+            <text x="177" y="162" text-anchor="middle" font-size="11" fill="#d29922" dominant-baseline="central">NSG: allow 80 / 443</text>
+            <!-- Subnet 2 -->
+            <rect x="335" y="48" width="185" height="150" rx="10" fill="rgba(63,185,80,.08)" stroke="rgba(63,185,80,.25)" stroke-width="1"/>
+            <text x="427" y="70" text-anchor="middle" font-size="12" font-weight="600" fill="#3fb950">DB Subnet 10.0.2.0/24</text>
+            <rect x="357" y="85" width="140" height="36" rx="6" fill="rgba(63,185,80,.15)" stroke="rgba(63,185,80,.3)" stroke-width="0.5"/>
+            <text x="427" y="103" text-anchor="middle" font-size="12" fill="#8ee09c" dominant-baseline="central">🗄 Database VM</text>
+            <rect x="350" y="148" width="155" height="28" rx="5" fill="rgba(248,81,73,.12)" stroke="rgba(248,81,73,.4)" stroke-width="0.5"/>
+            <text x="427" y="162" text-anchor="middle" font-size="11" fill="#f85149" dominant-baseline="central">NSG: allow 1433 only</text>
+            <!-- Internal arrow -->
+            <line x1="270" y1="103" x2="335" y2="103" stroke="#6e7681" stroke-width="1" marker-end="url(#a2)"/>
+            <!-- Internet arrow -->
+            <line x1="10" y1="103" x2="85" y2="103" stroke="#58a6ff" stroke-width="1" marker-end="url(#a2)"/>
+            <text x="6" y="92" font-size="10" fill="#58a6ff">Internet</text>
+            <text x="300" y="235" text-anchor="middle" font-size="11" fill="#6e7681">VNet Peering connects separate VNets (even cross-region)</text>
+          </svg>
+        </div>
+
+        <h3>NSG — Network Security Group</h3>
+        <p>An NSG is a <strong style="color:var(--text)">firewall for your subnet or NIC</strong>. It has inbound and outbound rules. Each rule has a priority number — <strong style="color:var(--blue)">lower number = higher priority</strong>. First matching rule wins.</p>
+
+        <div class="callout callout-green">
+          <div class="callout-title">✅ Example NSG rules</div>
+          Priority <strong>100</strong> — Allow — Inbound — Port <strong>443</strong><br>
+          Priority <strong>200</strong> — Deny — Inbound — Port <strong>Any</strong><br><br>
+          Result: Only HTTPS traffic (port 443) gets in. Everything else is blocked by rule 200.
+        </div>
+      </div>
+
+      <div class="card">
+        <h2>🔗 Connectivity services</h2>
+        <div class="tbl-wrap">
+          <table class="az">
+            <thead><tr><th>Service</th><th>What it does</th><th>Key detail</th></tr></thead>
+            <tbody>
+              <tr><td><strong>VNet Peering</strong></td><td>Connect two VNets directly</td><td>Not transitive by default</td></tr>
+              <tr><td><strong>VPN Gateway</strong></td><td>Encrypted tunnel over internet to on-prem</td><td>Up to 10 Gbps, slower setup</td></tr>
+              <tr><td><strong>ExpressRoute</strong></td><td>Private dedicated link to Azure</td><td>Not over internet, higher SLA</td></tr>
+              <tr><td><strong>Azure Load Balancer</strong></td><td>Distribute traffic across VMs</td><td>Layer 4 (TCP/UDP), public or internal</td></tr>
+              <tr><td><strong>Application Gateway</strong></td><td>HTTP load balancer with routing</td><td>Layer 7 — can route by URL path</td></tr>
+              <tr><td><strong>Azure DNS</strong></td><td>Host DNS zones in Azure</td><td>Private zones for internal resolution</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="callout callout-amber">
+          <div class="callout-title">⚠️ Peering trap</div>
+          VNet peering is <strong>not transitive</strong>. If A peers with B, and B peers with C — A cannot talk to C automatically. You must explicitly peer A↔C as well. This comes up a lot in exam scenarios.
+        </div>
+      </div>
+
+      <div class="quiz-card">
+        <div class="quiz-label">Quick Check — Module 02</div>
+        <div class="quiz-q">You have two NSG rules: Priority 100 — Deny port 22, and Priority 200 — Allow port 22. What happens when someone tries to SSH (port 22)?</div>
+        <div class="quiz-opts" id="q2">
+          <button class="quiz-opt" onclick="ans('q2',0,false)">A. Allowed — rule 200 permits it</button>
+          <button class="quiz-opt" onclick="ans('q2',1,true)">B. Denied — rule 100 has higher priority (lower number)</button>
+          <button class="quiz-opt" onclick="ans('q2',2,false)">C. It depends on the subnet</button>
+          <button class="quiz-opt" onclick="ans('q2',3,false)">D. Both rules cancel each other out</button>
+        </div>
+        <div class="quiz-feedback" id="q2-fb"></div>
+      </div>
+
+      <div class="mod-nav">
+        <button class="btn btn-ghost" onclick="goTo(1)">← Back</button>
+        <button class="btn btn-primary" onclick="goTo(3)">Next: Virtual Machines →</button>
+      </div>
+    </div>
+
+    <!-- MODULE 3: VMs -->
+    <div class="module" id="mod-3">
+      <div class="mod-header">
+        <div class="mod-tag">Module 03</div>
+        <h1>Virtual Machines</h1>
+        <p>Compute in the cloud — deploy, size, protect, and back up VMs.</p>
+      </div>
+
+      <div class="card">
+        <h2>🖥 VM basics</h2>
+        <p>An Azure VM is a computer running in Microsoft's data center. You choose the OS (Windows / Linux), size (CPU + RAM), and disk type. You pay per minute while it's running.</p>
+
+        <h3>VM size families</h3>
+        <div class="tbl-wrap">
+          <table class="az">
+            <thead><tr><th>Family</th><th>Best for</th><th>Example</th></tr></thead>
+            <tbody>
+              <tr><td><strong>B-series</strong></td><td>Low cost, bursty workloads</td><td>Dev/test, small apps</td></tr>
+              <tr><td><strong>D-series</strong></td><td>General purpose (balanced CPU/RAM)</td><td>Web servers, databases</td></tr>
+              <tr><td><strong>E-series</strong></td><td>Memory optimized</td><td>In-memory databases, SAP</td></tr>
+              <tr><td><strong>F-series</strong></td><td>Compute optimized</td><td>Batch processing, gaming</td></tr>
+              <tr><td><strong>N-series</strong></td><td>GPU workloads</td><td>Machine learning, rendering</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="card">
+        <h2>🏗 Availability options</h2>
+        <p>If a VM crashes or the hardware fails, you want your app to stay up. Azure offers three levels of protection:</p>
+
+        <div class="diagram">
+          <svg width="100%" viewBox="0 0 600 200">
+            <rect x="10" y="10" width="580" height="170" rx="12" fill="rgba(255,255,255,.03)" stroke="rgba(255,255,255,.08)" stroke-width="1"/>
+            <text x="300" y="34" text-anchor="middle" font-size="12" fill="#6e7681">Azure Region</text>
+            <!-- Zone 1 -->
+            <rect x="30" y="48" width="165" height="118" rx="10" fill="rgba(88,166,255,.1)" stroke="rgba(88,166,255,.3)" stroke-width="1"/>
+            <text x="112" y="70" text-anchor="middle" font-size="12" font-weight="600" fill="#58a6ff">Zone 1</text>
+            <rect x="50" y="82" width="125" height="34" rx="6" fill="rgba(88,166,255,.15)" stroke="rgba(88,166,255,.2)" stroke-width="0.5"/>
+            <text x="112" y="99" text-anchor="middle" font-size="12" fill="#a5c8ff" dominant-baseline="central">🖥 VM-1</text>
+            <text x="112" y="138" text-anchor="middle" font-size="11" fill="#6e7681">Data center A</text>
+            <!-- Zone 2 -->
+            <rect x="216" y="48" width="165" height="118" rx="10" fill="rgba(63,185,80,.1)" stroke="rgba(63,185,80,.3)" stroke-width="1"/>
+            <text x="298" y="70" text-anchor="middle" font-size="12" font-weight="600" fill="#3fb950">Zone 2</text>
+            <rect x="236" y="82" width="125" height="34" rx="6" fill="rgba(63,185,80,.15)" stroke="rgba(63,185,80,.2)" stroke-width="0.5"/>
+            <text x="298" y="99" text-anchor="middle" font-size="12" fill="#8ee09c" dominant-baseline="central">🖥 VM-2</text>
+            <text x="298" y="138" text-anchor="middle" font-size="11" fill="#6e7681">Data center B</text>
+            <!-- Zone 3 -->
+            <rect x="402" y="48" width="165" height="118" rx="10" fill="rgba(210,153,34,.1)" stroke="rgba(210,153,34,.3)" stroke-width="1"/>
+            <text x="484" y="70" text-anchor="middle" font-size="12" font-weight="600" fill="#d29922">Zone 3</text>
+            <rect x="422" y="82" width="125" height="34" rx="6" fill="rgba(210,153,34,.15)" stroke="rgba(210,153,34,.2)" stroke-width="0.5"/>
+            <text x="484" y="99" text-anchor="middle" font-size="12" fill="#e6c87a" dominant-baseline="central">🖥 VM-3</text>
+            <text x="484" y="138" text-anchor="middle" font-size="11" fill="#6e7681">Data center C</text>
+            <text x="300" y="188" text-anchor="middle" font-size="11" fill="#6e7681">If Zone 1 data center goes down → Zones 2 &amp; 3 keep serving traffic. SLA: 99.99%</text>
+          </svg>
+        </div>
+
+        <div class="tbl-wrap">
+          <table class="az">
+            <thead><tr><th>Option</th><th>Protects against</th><th>SLA</th></tr></thead>
+            <tbody>
+              <tr><td><strong>Availability Set</strong></td><td>Hardware failures within one data center (fault/update domains)</td><td><span class="badge badge-amber">99.95%</span></td></tr>
+              <tr><td><strong>Availability Zones</strong></td><td>Full data center failure (different buildings)</td><td><span class="badge badge-green">99.99%</span></td></tr>
+              <tr><td><strong>VM Scale Sets</strong></td><td>Traffic spikes — auto-scales VM count up and down</td><td><span class="badge badge-amber">99.95%</span></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="card">
+        <h2>💽 VM disks</h2>
+        <div class="concept-grid">
+          <div class="concept-card">
+            <div class="cc-icon">🟢</div>
+            <div class="cc-title">OS Disk</div>
+            <div class="cc-desc">System drive (C: or /). Persistent. Required.</div>
+          </div>
+          <div class="concept-card">
+            <div class="cc-icon">🔵</div>
+            <div class="cc-title">Data Disk</div>
+            <div class="cc-desc">Extra storage you attach. Persistent. Optional.</div>
+          </div>
+          <div class="concept-card">
+            <div class="cc-icon">🔴</div>
+            <div class="cc-title">Temp Disk</div>
+            <div class="cc-desc">Fast local storage. LOST when VM is deallocated!</div>
+          </div>
+        </div>
+
+        <div class="callout callout-amber">
+          <div class="callout-title">⚠️ Temp disk trap</div>
+          Temp disk data is wiped when you <strong>stop/deallocate</strong> a VM (not just restart). Never store anything important there. It's only for swap files or temporary processing.
+        </div>
+
+        <h3>Backup</h3>
+        <p>Use <strong style="color:var(--text)">Azure Backup</strong> with a <strong style="color:var(--text)">Recovery Services Vault</strong> to back up VMs. You define a <em>backup policy</em> (frequency + retention). You can restore a full VM or individual files/folders.</p>
+      </div>
+
+      <div class="quiz-card">
+        <div class="quiz-label">Quick Check — Module 03</div>
+        <div class="quiz-q">Your web app is hosted on Azure VMs. You need the app to survive a complete data center failure. What should you use?</div>
+        <div class="quiz-opts" id="q3">
+          <button class="quiz-opt" onclick="ans('q3',0,false)">A. Availability Set</button>
+          <button class="quiz-opt" onclick="ans('q3',1,true)">B. Availability Zones</button>
+          <button class="quiz-opt" onclick="ans('q3',2,false)">C. VM Scale Set with 1 zone</button>
+          <button class="quiz-opt" onclick="ans('q3',3,false)">D. Managed Disk (Premium SSD)</button>
+        </div>
+        <div class="quiz-feedback" id="q3-fb"></div>
+      </div>
+
+      <div class="mod-nav">
+        <button class="btn btn-ghost" onclick="goTo(2)">← Back</button>
+        <button class="btn btn-primary" onclick="goTo(4)">Next: Storage →</button>
+      </div>
+    </div>
+
+    <!-- MODULE 4: STORAGE -->
+    <div class="module" id="mod-4">
+      <div class="mod-header">
+        <div class="mod-tag">Module 04</div>
+        <h1>Storage</h1>
+        <p>Scalable, durable cloud storage for any type of data.</p>
+      </div>
+
+      <div class="card">
+        <h2>💾 Storage services</h2>
+        <div class="tbl-wrap">
+          <table class="az">
+            <thead><tr><th>Service</th><th>Use it for</th><th>Real example</th></tr></thead>
+            <tbody>
+              <tr><td><strong>Blob Storage</strong></td><td>Unstructured files (images, videos, logs, backups)</td><td>Profile pictures, VM backups</td></tr>
+              <tr><td><strong>Azure Files</strong></td><td>File shares (SMB/NFS) — mount as a network drive</td><td>Shared drive for multiple VMs</td></tr>
+              <tr><td><strong>Table Storage</strong></td><td>NoSQL key-value data, simple and cheap</td><td>Session data, device telemetry</td></tr>
+              <tr><td><strong>Queue Storage</strong></td><td>Message queuing between services</td><td>Decouple app components</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="card">
+        <h2>🌡 Blob access tiers</h2>
+        <p>Choose a tier based on how often you access the data. Lower access frequency = lower storage cost but higher retrieval cost.</p>
+
+        <div class="diagram">
+          <svg width="100%" viewBox="0 0 600 150">
+            <!-- Hot -->
+            <rect x="20" y="20" width="170" height="110" rx="10" fill="rgba(248,81,73,.1)" stroke="rgba(248,81,73,.35)" stroke-width="1"/>
+            <text x="105" y="48" text-anchor="middle" font-size="15" font-weight="600" fill="#f85149">🔥 Hot</text>
+            <text x="105" y="70" text-anchor="middle" font-size="11" fill="#ff9492">For daily access</text>
+            <text x="105" y="88" text-anchor="middle" font-size="11" fill="#ff9492">Higher storage cost</text>
+            <text x="105" y="106" text-anchor="middle" font-size="11" fill="#ff9492">Low access cost</text>
+            <!-- Cool -->
+            <rect x="215" y="20" width="170" height="110" rx="10" fill="rgba(88,166,255,.1)" stroke="rgba(88,166,255,.35)" stroke-width="1"/>
+            <text x="300" y="48" text-anchor="middle" font-size="15" font-weight="600" fill="#58a6ff">❄ Cool</text>
+            <text x="300" y="70" text-anchor="middle" font-size="11" fill="#a5c8ff">Accessed monthly</text>
+            <text x="300" y="88" text-anchor="middle" font-size="11" fill="#a5c8ff">Lower storage cost</text>
+            <text x="300" y="106" text-anchor="middle" font-size="11" fill="#a5c8ff">Min 30-day retention</text>
+            <!-- Archive -->
+            <rect x="410" y="20" width="170" height="110" rx="10" fill="rgba(188,140,255,.1)" stroke="rgba(188,140,255,.35)" stroke-width="1"/>
+            <text x="495" y="48" text-anchor="middle" font-size="15" font-weight="600" fill="#bc8cff">🗄 Archive</text>
+            <text x="495" y="70" text-anchor="middle" font-size="11" fill="#d4aaff">Rarely accessed</text>
+            <text x="495" y="88" text-anchor="middle" font-size="11" fill="#d4aaff">Cheapest storage</text>
+            <text x="495" y="106" text-anchor="middle" font-size="11" fill="#d4aaff">Hours to rehydrate!</text>
+          </svg>
+        </div>
+
+        <div class="callout callout-blue">
+          <div class="callout-title">💡 Lifecycle management</div>
+          You can create a <strong>lifecycle policy</strong> to automatically move blobs between tiers. Example: move to Cool after 30 days of no access, move to Archive after 90 days. This saves cost automatically with zero manual work.
+        </div>
+      </div>
+
+      <div class="card">
+        <h2>🔒 Storage access &amp; security</h2>
+        <div class="tbl-wrap">
+          <table class="az">
+            <thead><tr><th>Method</th><th>What it is</th><th>When to use</th></tr></thead>
+            <tbody>
+              <tr><td><strong>Access Keys</strong></td><td>Full admin access (like a root password)</td><td>Service connections — keep secret!</td></tr>
+              <tr><td><strong>SAS Token</strong></td><td>Limited time-bound token for specific access</td><td>Share a file externally for 24h</td></tr>
+              <tr><td><strong>Azure AD / RBAC</strong></td><td>Identity-based access using roles</td><td>Best practice for users &amp; managed identities</td></tr>
+              <tr><td><strong>Public access</strong></td><td>Anyone on the internet can read</td><td>Static websites, public assets only</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="callout callout-green">
+          <div class="callout-title">✅ SAS token example</div>
+          You need to let a client download a report for 24 hours. Generate a <strong>SAS token</strong> with: read-only permission, on the specific blob, expiring in 24h. The client gets a URL — they never see your account key, and the URL stops working after 24h automatically.
+        </div>
+      </div>
+
+      <div class="quiz-card">
+        <div class="quiz-label">Quick Check — Module 04</div>
+        <div class="quiz-q">You store log files that are rarely accessed after 90 days. You want to minimize storage costs. Which tier should you move them to using a lifecycle policy?</div>
+        <div class="quiz-opts" id="q4">
+          <button class="quiz-opt" onclick="ans('q4',0,false)">A. Hot</button>
+          <button class="quiz-opt" onclick="ans('q4',1,false)">B. Cool</button>
+          <button class="quiz-opt" onclick="ans('q4',2,true)">C. Archive</button>
+          <button class="quiz-opt" onclick="ans('q4',3,false)">D. Premium</button>
+        </div>
+        <div class="quiz-feedback" id="q4-fb"></div>
+      </div>
+
+      <div class="mod-nav">
+        <button class="btn btn-ghost" onclick="goTo(3)">← Back</button>
+        <button class="btn btn-primary" onclick="goTo(5)">Next: Governance →</button>
+      </div>
+    </div>
+
+    <!-- MODULE 5: GOVERNANCE -->
+    <div class="module" id="mod-5">
+      <div class="mod-header">
+        <div class="mod-tag">Module 05</div>
+        <h1>Governance &amp; Management</h1>
+        <p>Organize, protect, and control costs across your Azure environment.</p>
+      </div>
+
+      <div class="card">
+        <h2>🏛 Azure management hierarchy</h2>
+        <p>Azure resources are organized in a hierarchy. Permissions and policies applied at a higher level <strong style="color:var(--text)">flow down</strong> to everything below.</p>
+
+        <div class="diagram">
+          <svg width="100%" viewBox="0 0 600 230">
+            <defs>
+              <marker id="a5" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                <path d="M2 1L8 5L2 9" fill="none" stroke="#6e7681" stroke-width="1.5" stroke-linecap="round"/>
+              </marker>
+            </defs>
+            <!-- Management Group -->
+            <rect x="175" y="10" width="250" height="44" rx="8" fill="rgba(188,140,255,.12)" stroke="rgba(188,140,255,.4)" stroke-width="1"/>
+            <text x="300" y="32" text-anchor="middle" font-size="13" font-weight="600" fill="#bc8cff" dominant-baseline="central">Management Group</text>
+            <line x1="300" y1="54" x2="300" y2="72" stroke="#6e7681" stroke-width="1" marker-end="url(#a5)"/>
+            <!-- Subscription -->
+            <rect x="165" y="72" width="270" height="44" rx="8" fill="rgba(88,166,255,.12)" stroke="rgba(88,166,255,.4)" stroke-width="1"/>
+            <text x="300" y="94" text-anchor="middle" font-size="13" font-weight="600" fill="#58a6ff" dominant-baseline="central">Subscription</text>
+            <line x1="300" y1="116" x2="300" y2="134" stroke="#6e7681" stroke-width="1" marker-end="url(#a5)"/>
+            <!-- Resource Group -->
+            <rect x="155" y="134" width="290" height="44" rx="8" fill="rgba(63,185,80,.12)" stroke="rgba(63,185,80,.4)" stroke-width="1"/>
+            <text x="300" y="156" text-anchor="middle" font-size="13" font-weight="600" fill="#3fb950" dominant-baseline="central">Resource Group</text>
+            <line x1="300" y1="178" x2="300" y2="196" stroke="#6e7681" stroke-width="1" marker-end="url(#a5)"/>
+            <!-- Resources -->
+            <rect x="130" y="196" width="340" height="28" rx="6" fill="rgba(210,153,34,.12)" stroke="rgba(210,153,34,.4)" stroke-width="1"/>
+            <text x="300" y="210" text-anchor="middle" font-size="12" fill="#d29922" dominant-baseline="central">Resources — VMs, Storage, Databases, Networks…</text>
+            <!-- Annotations -->
+            <text x="12" y="32" font-size="10" fill="#6e7681" text-anchor="start">Broadest</text>
+            <text x="12" y="210" font-size="10" fill="#6e7681" text-anchor="start">Most specific</text>
+          </svg>
+        </div>
+      </div>
+
+      <div class="card">
+        <h2>📜 Azure Policy</h2>
+        <p>Policies let you <strong style="color:var(--text)">automatically enforce rules</strong> across your Azure environment. When a resource doesn't comply, it can be flagged or blocked from being created.</p>
+
+        <div class="tbl-wrap">
+          <table class="az">
+            <thead><tr><th>Effect</th><th>What it does</th></tr></thead>
+            <tbody>
+              <tr><td><strong>Deny</strong></td><td>Blocks non-compliant resources from being created</td></tr>
+              <tr><td><strong>Audit</strong></td><td>Logs non-compliant resources but still allows them</td></tr>
+              <tr><td><strong>Append</strong></td><td>Automatically adds properties (e.g. a tag)</td></tr>
+              <tr><td><strong>DeployIfNotExists</strong></td><td>Deploys a related resource if it doesn't exist</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="callout callout-green">
+          <div class="callout-title">✅ Policy example</div>
+          Policy: "Allowed virtual machine SKUs = Standard_D2, Standard_D4 only." <br>Effect: Deny.<br><br>
+          If a developer tries to create an expensive <code>Standard_E64</code> VM in production — Azure blocks it automatically, before any resource is created.
+        </div>
+      </div>
+
+      <div class="card">
+        <h2>🔒 Resource Locks</h2>
+        <p>Locks prevent <strong style="color:var(--text)">accidental deletion or modification</strong> of critical resources. They apply to ALL users, including Owners.</p>
+
+        <div class="concept-grid">
+          <div class="concept-card">
+            <div class="cc-icon">🗑</div>
+            <div class="cc-title">CanNotDelete</div>
+            <div class="cc-desc">Nobody can delete the resource. Read and modify are still allowed.</div>
+          </div>
+          <div class="concept-card">
+            <div class="cc-icon">📖</div>
+            <div class="cc-title">ReadOnly</div>
+            <div class="cc-desc">Nobody can delete or modify. Read-only. Strong protection.</div>
+          </div>
+        </div>
+
+        <div class="callout callout-amber">
+          <div class="callout-title">⚠️ Exam trap</div>
+          Even an <strong>Owner</strong> cannot delete a resource with a <code>CanNotDelete</code> lock. They must first remove the lock, then delete. This is a deliberate safeguard — and a common exam trick.
+        </div>
+      </div>
+
+      <div class="card">
+        <h2>🏷 Tags &amp; Cost Management</h2>
+        <h3>Tags</h3>
+        <p>Tags are <strong style="color:var(--text)">name/value pairs</strong> you attach to resources. Used for cost allocation, searching, and automation.</p>
+        <p style="margin-top:.5rem">Examples: <code>Environment: Production</code>, <code>Team: DevOps</code>, <code>CostCenter: 4521</code></p>
+        <p style="margin-top:.5rem;color:var(--text3)">⚠️ Tags are NOT inherited by child resources by default. Use Azure Policy to enforce tagging.</p>
+
+        <h3>Cost management tools</h3>
+        <div class="tbl-wrap">
+          <table class="az">
+            <thead><tr><th>Tool</th><th>Purpose</th></tr></thead>
+            <tbody>
+              <tr><td><strong>Cost Analysis</strong></td><td>Visual breakdown of what you're spending, filtered by tags/resource type/time</td></tr>
+              <tr><td><strong>Budgets</strong></td><td>Set a spending limit — get alerts at 80%, 100%, etc.</td></tr>
+              <tr><td><strong>Azure Advisor</strong></td><td>AI recommendations for cost savings, performance, security, reliability</td></tr>
+              <tr><td><strong>Reservations</strong></td><td>Pay 1–3 years upfront for up to 72% discount on VMs</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="quiz-card">
+        <div class="quiz-label">Quick Check — Module 05</div>
+        <div class="quiz-q">A junior admin accidentally deleted a production database last week. What is the best way to prevent this from happening again?</div>
+        <div class="quiz-opts" id="q5">
+          <button class="quiz-opt" onclick="ans('q5',0,true)">A. Apply a CanNotDelete lock on the resource</button>
+          <button class="quiz-opt" onclick="ans('q5',1,false)">B. Apply a ReadOnly lock on the resource</button>
+          <button class="quiz-opt" onclick="ans('q5',2,false)">C. Create an Azure Policy with Deny effect</button>
+          <button class="quiz-opt" onclick="ans('q5',3,false)">D. Assign the Reader role to all admins</button>
+        </div>
+        <div class="quiz-feedback" id="q5-fb"></div>
+      </div>
+
+      <div class="mod-nav">
+        <button class="btn btn-ghost" onclick="goTo(4)">← Back</button>
+        <button class="btn btn-primary" onclick="goTo(0)">Back to overview ↩</button>
+      </div>
+
+      <div style="margin-top:1.5rem; padding:1.5rem; background:var(--bg2); border:1px solid var(--border); border-radius:12px; text-align:center;">
+        <div style="font-size:28px;margin-bottom:.5rem">🎉</div>
+        <div style="font-size:16px;font-weight:600;color:var(--text);margin-bottom:.5rem">All 5 modules done!</div>
+        <div style="font-size:13px;color:var(--text2)">Review any module using the sidebar, or open this file in your browser anytime — it works fully offline.</div>
+      </div>
+    </div>
+
+  </main>
+</div>
+
+<script>
+  const TOTAL = 5;
+  const visited = new Set([0]);
+  let current = 0;
+
+  function goTo(idx) {
+    document.getElementById('mod-' + current).classList.remove('visible');
+    const prevNav = document.getElementById('nav-' + current);
+    prevNav.classList.remove('active');
+    if (current !== 0) prevNav.classList.add('done');
+
+    current = idx;
+    visited.add(idx);
+
+    document.getElementById('mod-' + idx).classList.add('visible');
+    const nextNav = document.getElementById('nav-' + idx);
+    nextNav.classList.remove('done');
+    nextNav.classList.add('active');
+
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+    updateProgress();
+  }
+
+  function updateProgress() {
+    const count = visited.size - 1;
+    const pct = Math.round((count / TOTAL) * 100);
+    document.getElementById('prog-fill').style.width = pct + '%';
+    document.getElementById('prog-label').textContent = count + ' / ' + TOTAL + ' modules';
+  }
+
+  const FB = {
+    q1: { c: 'Correct! Contributor lets you fully manage resources but cannot assign roles to others. Owner is too permissive here.', w: 'Not quite. Contributor is the answer — it allows full resource management but blocks role assignment.' },
+    q2: { c: 'Correct! NSG rules are evaluated by priority number — lower = higher priority. Rule 100 (Deny) fires first and the connection is blocked.', w: 'Not quite. Lower priority number wins. Rule 100 (Deny port 22) fires before rule 200 (Allow port 22).' },
+    q3: { c: 'Correct! Availability Zones spread VMs across separate physical data centers. If one goes down, the others keep running. SLA: 99.99%.', w: 'Not quite. Availability Zones are the answer — they protect against full data center failures. Availability Sets only protect within a single data center.' },
+    q4: { c: 'Correct! Archive is the cheapest Blob tier. Perfect for log files that are rarely accessed after a retention period. Note: rehydration takes hours.', w: 'Not quite. Archive is the cheapest tier for rarely-accessed data. Use a lifecycle policy to move blobs there automatically after 90 days.' },
+    q5: { c: 'Correct! CanNotDelete lock prevents anyone — including Owners — from deleting a resource. ReadOnly would also block it but would also prevent all modifications, which is often too restrictive for an active database.', w: 'Not quite. CanNotDelete lock is the targeted solution — it specifically prevents deletion while still allowing normal read/write operations on the resource.' }
+  };
+
+  function ans(qId, optIdx, isCorrect) {
+    const opts = document.querySelectorAll('#' + qId + ' .quiz-opt');
+    opts.forEach(o => o.disabled = true);
+    opts[optIdx].classList.add(isCorrect ? 'correct' : 'wrong');
+    if (!isCorrect) {
+      opts.forEach(o => {
+        if (o.getAttribute('onclick').includes(',true,')) o.classList.add('correct');
+      });
+    }
+    const fb = document.getElementById(qId + '-fb');
+    const data = FB[qId];
+    fb.textContent = isCorrect ? '✅ ' + data.c : '❌ ' + data.w;
+    fb.className = 'quiz-feedback show ' + (isCorrect ? 'correct' : 'wrong');
+  }
+</script>
+
+</body>
+</html>
